@@ -1,0 +1,51 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Ditat.Logic.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Ditat_Logic_Tradera_RestrictedService_RestrictedService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://api.tradera.com/v3/RestrictedService.asmx</Value>
+    </Setting>
+    <Setting Name="Ditat_Logic_Tradera_PublicService_PublicService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://api.tradera.com/v3/PublicService.asmx</Value>
+    </Setting>
+    <Setting Name="ShopAppId" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">1778</Value>
+    </Setting>
+    <Setting Name="ShopApplicationKey" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">fa1dfeb6-a744-4801-9119-84a89a802370</Value>
+    </Setting>
+    <Setting Name="ShopApplicationToken" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">44dcc8b7-d612-4aff-ac07-xxxxxx</Value>
+    </Setting>
+    <Setting Name="ShopUserId" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">4645731</Value>
+    </Setting>
+    <Setting Name="RefObjectHeight" Type="System.Double" Scope="Application">
+      <Value Profile="(Default)">10.2</Value>
+    </Setting>
+    <Setting Name="RefObjectWidth" Type="System.Double" Scope="Application">
+      <Value Profile="(Default)">4.8</Value>
+    </Setting>
+    <Setting Name="MinObjectArea" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">50000</Value>
+    </Setting>
+    <Setting Name="MinObjectHeight" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">400</Value>
+    </Setting>
+    <Setting Name="MinObjectWidth" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">400</Value>
+    </Setting>
+    <Setting Name="ImagePath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">C:\inetpub\ditatapi\Images\</Value>
+    </Setting>
+    <Setting Name="Classifier_TrainingApiKey" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">deb01f075bbe4d73a380c0d98e129714</Value>
+    </Setting>
+    <Setting Name="Classifier_ProjectName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Dit</Value>
+    </Setting>
+    <Setting Name="Classifier_PredictionApiKey" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">xxxxxxxx</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

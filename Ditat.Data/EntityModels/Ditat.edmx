@@ -1,0 +1,541 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DitatModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="ExternalId" Type="nvarchar" MaxLength="50" />
+          <Property Name="Properties" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Icon" Type="nvarchar" MaxLength="50" />
+          <Property Name="ClassifierTag" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="CategoryProperty">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryId" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" />
+          <Property Name="SortValue" Type="int" Nullable="false" />
+          <Property Name="Creator" Type="int" />
+          <Property Name="ValueType" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Language">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Shortname" Type="nvarchar" MaxLength="10" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LanguageText">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LanguageId" Type="int" Nullable="false" />
+          <Property Name="KeyName" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Value" Type="nvarchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CategoryId" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="300" />
+          <Property Name="Barcode" Type="nvarchar" MaxLength="50" />
+          <Property Name="Price" Type="nvarchar" MaxLength="50" />
+          <Property Name="Comment" Type="nvarchar(max)" />
+          <Property Name="ProductStatusId" Type="int" />
+          <Property Name="ProductConditionId" Type="int" />
+          <Property Name="Category" Type="nvarchar" MaxLength="50" />
+          <Property Name="Properties" Type="nvarchar(max)" />
+          <Property Name="Inserted" Type="datetime" />
+          <Property Name="ProductNumber" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Shipping" Type="bit" Nullable="false" />
+          <Property Name="ShopUrl" Type="nvarchar" MaxLength="200" />
+          <Property Name="ShippingCost" Type="int" />
+        </EntityType>
+        <EntityType Name="ProductCondition">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Condition" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ProductImage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ProductId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Path" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PrimaryImage" Type="bit" Nullable="false" />
+          <Property Name="Inserted" Type="datetime" />
+          <Property Name="Barcode" Type="nvarchar" MaxLength="50" />
+          <Property Name="Category" Type="nvarchar" MaxLength="50" />
+          <Property Name="Properties" Type="nvarchar(max)" />
+          <Property Name="ClassifierPropability" Type="float" />
+          <Property Name="SelectedForExport" Type="bit" />
+        </EntityType>
+        <EntityType Name="ProductStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_CategoryProperty_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="CategoryProperty" Type="Self.CategoryProperty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CategoryProperty">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_ProductCondition">
+          <End Role="ProductCondition" Type="Self.ProductCondition" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCondition">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="ProductConditionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_ProductStatus">
+          <End Role="ProductStatus" Type="Self.ProductStatus" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="ProductStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductImages_Products">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="ProductImage" Type="Self.ProductImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductImage">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="AddMissingTranslations" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetLanguageAsJSON" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="LanguageId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetLanguageText" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="LanguageId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SetPrimaryImage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ImageId" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <EntityContainer Name="DitatModelStoreContainer">
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CategoryProperty" EntityType="Self.CategoryProperty" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Language" EntityType="Self.Language" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LanguageText" EntityType="Self.LanguageText" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductCondition" EntityType="Self.ProductCondition" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductImage" EntityType="Self.ProductImage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductStatus" EntityType="Self.ProductStatus" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CategoryProperty_Category" Association="Self.FK_CategoryProperty_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="CategoryProperty" EntitySet="CategoryProperty" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Category" Association="Self.FK_Product_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_ProductCondition" Association="Self.FK_Product_ProductCondition">
+            <End Role="ProductCondition" EntitySet="ProductCondition" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_ProductStatus" Association="Self.FK_Product_ProductStatus">
+            <End Role="ProductStatus" EntitySet="ProductStatus" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductImages_Products" Association="Self.FK_ProductImages_Products">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="ProductImage" EntitySet="ProductImage" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DitatModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ExternalId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Products" Relationship="DitatModel.FK_Product_Category" FromRole="Category" ToRole="Product" />
+          <Property Name="Properties" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Icon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ClassifierTag" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CategoryProperties" Relationship="DitatModel.FK_CategoryProperty_Category" FromRole="Category" ToRole="CategoryProperty" />
+        </EntityType>
+        <EntityType Name="CategoryProperty">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryId" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SortValue" Type="Int32" Nullable="false" />
+          <Property Name="Creator" Type="Int32" />
+          <Property Name="ValueType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Category" Relationship="DitatModel.FK_CategoryProperty_Category" FromRole="CategoryProperty" ToRole="Category" />
+        </EntityType>
+        <EntityType Name="Language">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Shortname" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LanguageText">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LanguageId" Type="Int32" Nullable="false" />
+          <Property Name="KeyName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Value" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Barcode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Category" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Properties" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Inserted" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ProductImages" Relationship="Self.FK_ProductImages_Products" FromRole="Product" ToRole="ProductImage" />
+          <Property Name="CategoryId" Type="Int32" />
+          <NavigationProperty Name="Category1" Relationship="DitatModel.FK_Product_Category" FromRole="Product" ToRole="Category" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ProductStatusId" Type="Int32" />
+          <Property Name="ProductConditionId" Type="Int32" />
+          <NavigationProperty Name="ProductCondition" Relationship="DitatModel.FK_Product_ProductCondition" FromRole="Product" ToRole="ProductCondition" />
+          <NavigationProperty Name="ProductStatu" Relationship="DitatModel.FK_Product_ProductStatus" FromRole="Product" ToRole="ProductStatu" />
+          <Property Name="ProductNumber" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Shipping" Type="Boolean" Nullable="false" />
+          <Property Name="ShopUrl" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ShippingCost" Type="Int32" />
+        </EntityType>
+        <EntityType Name="ProductImage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="ProductId" Type="Guid" Nullable="false" />
+          <Property Name="Path" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PrimaryImage" Type="Boolean" Nullable="false" />
+          <Property Name="Inserted" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_ProductImages_Products" FromRole="ProductImage" ToRole="Product" />
+          <Property Name="Barcode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Category" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Properties" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClassifierPropability" Type="Double" />
+          <Property Name="SelectedForExport" Type="Boolean" />
+        </EntityType>
+        <Association Name="FK_ProductImages_Products">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="ProductImage" Type="Self.ProductImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductImage">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DitatEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Categories" EntityType="Self.Category" />
+          <EntitySet Name="CategoryProperties" EntityType="Self.CategoryProperty" />
+          <EntitySet Name="Languages" EntityType="Self.Language" />
+          <EntitySet Name="LanguageTexts" EntityType="Self.LanguageText" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="ProductImages" EntityType="Self.ProductImage" />
+          <AssociationSet Name="FK_ProductImages_Products" Association="Self.FK_ProductImages_Products">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="ProductImage" EntitySet="ProductImages" />
+          </AssociationSet>
+          <FunctionImport Name="AddMissingTranslations" />
+          <AssociationSet Name="FK_Product_Category" Association="DitatModel.FK_Product_Category">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <FunctionImport Name="GetLanguageText" ReturnType="Collection(DitatModel.GetLanguageText_Result)">
+          <Parameter Name="LanguageId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <AssociationSet Name="FK_CategoryProperty_Category" Association="DitatModel.FK_CategoryProperty_Category">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="CategoryProperty" EntitySet="CategoryProperties" />
+          </AssociationSet>
+          <EntitySet Name="ProductConditions" EntityType="DitatModel.ProductCondition" />
+          <EntitySet Name="ProductStatus" EntityType="DitatModel.ProductStatu" />
+          <AssociationSet Name="FK_Product_ProductCondition" Association="DitatModel.FK_Product_ProductCondition">
+            <End Role="ProductCondition" EntitySet="ProductConditions" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_ProductStatus" Association="DitatModel.FK_Product_ProductStatus">
+            <End Role="ProductStatu" EntitySet="ProductStatus" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <FunctionImport Name="GetLanguageAsJSON">
+          <Parameter Name="LanguageId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SetPrimaryImage">
+          <Parameter Name="ImageId" Mode="In" Type="Guid" />
+          </FunctionImport>
+        </EntityContainer>
+        <Association Name="FK_Product_Category">
+          <End Type="DitatModel.Category" Role="Category" Multiplicity="0..1" />
+          <End Type="DitatModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="GetLanguageText_Result">
+          <Property Type="String" Name="KeyName" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="KeyValue" Nullable="false" MaxLength="200" />
+        </ComplexType>
+        <Association Name="FK_CategoryProperty_Category">
+          <End Type="DitatModel.Category" Role="Category" Multiplicity="0..1" />
+          <End Type="DitatModel.CategoryProperty" Role="CategoryProperty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CategoryProperty">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ProductCondition">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Condition" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Products" Relationship="DitatModel.FK_Product_ProductCondition" FromRole="ProductCondition" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="ProductStatu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Products" Relationship="DitatModel.FK_Product_ProductStatus" FromRole="ProductStatu" ToRole="Product" />
+        </EntityType>
+        <Association Name="FK_Product_ProductCondition">
+          <End Type="DitatModel.ProductCondition" Role="ProductCondition" Multiplicity="0..1" />
+          <End Type="DitatModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCondition">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="ProductConditionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_ProductStatus">
+          <End Type="DitatModel.ProductStatu" Role="ProductStatu" Multiplicity="0..1" />
+          <End Type="DitatModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductStatu">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="ProductStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DitatModelStoreContainer" CdmEntityContainer="DitatEntities">
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="DitatModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="ClassifierTag" ColumnName="ClassifierTag" />
+                <ScalarProperty Name="Icon" ColumnName="Icon" />
+                <ScalarProperty Name="Properties" ColumnName="Properties" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ExternalId" ColumnName="ExternalId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CategoryProperties">
+            <EntityTypeMapping TypeName="DitatModel.CategoryProperty">
+              <MappingFragment StoreEntitySet="CategoryProperty">
+                <ScalarProperty Name="ValueType" ColumnName="ValueType" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="SortValue" ColumnName="SortValue" />
+                <ScalarProperty Name="Creator" ColumnName="Creator" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Languages">
+            <EntityTypeMapping TypeName="DitatModel.Language">
+              <MappingFragment StoreEntitySet="Language">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Shortname" ColumnName="Shortname" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LanguageTexts">
+            <EntityTypeMapping TypeName="DitatModel.LanguageText">
+              <MappingFragment StoreEntitySet="LanguageText">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="LanguageId" ColumnName="LanguageId" />
+                <ScalarProperty Name="KeyName" ColumnName="KeyName" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="DitatModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="ShippingCost" ColumnName="ShippingCost" />
+                <ScalarProperty Name="ShopUrl" ColumnName="ShopUrl" />
+                <ScalarProperty Name="Shipping" ColumnName="Shipping" />
+                <ScalarProperty Name="ProductNumber" ColumnName="ProductNumber" />
+                <ScalarProperty Name="ProductConditionId" ColumnName="ProductConditionId" />
+                <ScalarProperty Name="ProductStatusId" ColumnName="ProductStatusId" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="Properties" ColumnName="Properties" />
+                <ScalarProperty Name="Inserted" ColumnName="Inserted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductImages">
+            <EntityTypeMapping TypeName="DitatModel.ProductImage">
+              <MappingFragment StoreEntitySet="ProductImage">
+                <ScalarProperty Name="SelectedForExport" ColumnName="SelectedForExport" />
+                <ScalarProperty Name="ClassifierPropability" ColumnName="ClassifierPropability" />
+                <ScalarProperty Name="Properties" ColumnName="Properties" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="Path" ColumnName="Path" />
+                <ScalarProperty Name="PrimaryImage" ColumnName="PrimaryImage" />
+                <ScalarProperty Name="Inserted" ColumnName="Inserted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="AddMissingTranslations" FunctionName="DitatModel.Store.AddMissingTranslations" />
+          <FunctionImportMapping FunctionImportName="GetLanguageText" FunctionName="DitatModel.Store.GetLanguageText">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DitatModel.GetLanguageText_Result">
+                <ScalarProperty Name="KeyName" ColumnName="KeyName" />
+                <ScalarProperty Name="KeyValue" ColumnName="KeyValue" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="ProductConditions">
+            <EntityTypeMapping TypeName="DitatModel.ProductCondition">
+              <MappingFragment StoreEntitySet="ProductCondition">
+                <ScalarProperty Name="Condition" ColumnName="Condition" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductStatus">
+            <EntityTypeMapping TypeName="DitatModel.ProductStatu">
+              <MappingFragment StoreEntitySet="ProductStatus">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetLanguageAsJSON" FunctionName="DitatModel.Store.GetLanguageAsJSON" />
+          <FunctionImportMapping FunctionImportName="SetPrimaryImage" FunctionName="DitatModel.Store.SetPrimaryImage" />
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

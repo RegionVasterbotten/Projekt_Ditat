@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b515ad3cb45a45ffb6866005451e5475" Name="Diagram1">
+        <EntityTypeShape EntityType="DitatModel.Category" Width="1.5" PointX="2.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DitatModel.CategoryProperty" Width="1.5" PointX="4.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DitatModel.Language" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DitatModel.LanguageText" Width="1.5" PointX="6.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DitatModel.Product" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="DitatModel.ProductImage" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
+        <AssociationConnector Association="DitatModel.FK_ProductImages_Products" ManuallyRouted="false" />
+        <AssociationConnector Association="DitatModel.FK_Product_Category" />
+        <AssociationConnector Association="DitatModel.FK_CategoryProperty_Category" />
+        <EntityTypeShape EntityType="DitatModel.ProductCondition" Width="1.5" PointX="0.75" PointY="8.375" />
+        <EntityTypeShape EntityType="DitatModel.ProductStatu" Width="1.5" PointX="7.375" PointY="6.875" />
+        <AssociationConnector Association="DitatModel.FK_Product_ProductCondition" />
+        <AssociationConnector Association="DitatModel.FK_Product_ProductStatus" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
