@@ -7,12 +7,12 @@ För att köra systemet behövs följande:
 *	.NET 4
 *	SQL Server Express
 
-### Vi använder bland annat följande tredjeparts-bibliotek. Dessa laddas ned när man bygger projektet.
+### Vi använder bland annat följande tredjeparts-bibliotek. 
 *	EMGU CV
 *	ZXING
 *	Vue.js
 
-### Användarkonton/token behövs för följande
+### Användarkonton/tokens behövs för följande
 *	Tradera
 *	EAN-search
 *	Discogs
